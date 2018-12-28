@@ -62,14 +62,17 @@
                     <li><a class="smoothscroll"  href="#works" title="works">Works</a></li>
                     <li><a class="smoothscroll"  href="#clients" title="clients">Clients</a></li>
                     <li><a class="smoothscroll"  href="#contact" title="contact">Contact</a></li>
+                    
                 </ul>
-                <form action="signup.html">
+                <form id="signup-btn" action="signup.html">
                         <button type="submit" class="btn btn--stroke btn--pill" >Signup</button>
                 </form>
-                <form action="login.html">
+                <form id="login-btn" action="login.html">
                         <button type="submit" class="btn btn--stroke btn--pill">Login</button>
                 </form>
-                
+                <form id="logout-btn" action="login.html">
+                        <button type="submit" class="btn btn--stroke btn--pill" >Logout</button>
+                </form>
     
                 <ul class="header-nav__social">
                     <li>
@@ -115,8 +118,8 @@
                 <h3>Welcome to Our Creative Studio</h3>
 
                 <h1>
-                    Let`s Design <br>
-					 Your Logo<br>
+                    Hire a designer <br>
+					 Directly<br>
                    <br>
 
                     
@@ -180,7 +183,7 @@
         <div class="row about-desc" data-aos="fade-up">
             <div class="col-full">
                 <p>
-                 We are a Design Agency with talented and creative staff, So we started the website to offer the branding and logo design service with full branding. The most valuable thing is we offer unlimited revision and money back satisfaction guarantee to every client that work with us.
+                    We are a Design Agency with talented and creative staff, So we started the website to offer the branding and logo design service with full branding. Only with a few simple steps, You can choose a designer and can get first logo drafts within one day to get things done. You can easily chat with our designers and start an order and monitor till everything’s completed. To add extra services to match your requirements. Custom Orders is also available as well. We have a dispute system that admins can arbitrate and monitor open/disputed claims between the designers and buyers. This helps create a safe and reliable environment. We want to make sure everyone has a great experience. We make sure your users are always protected with secure login and payment process. Artycog.com is fully SSL secured.
                 </p>
             </div>
         </div> <!-- end about-desc -->
@@ -702,7 +705,14 @@ We are offer print ready CMYK Jpge or PNG files as final delivery,Starting from 
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
-
+    <script>
+            if(sessionStorage.getItem('curr_user') || localStorage.getItem('curr_user')){ 
+                $('#login-btn').hide();
+                $('#signup-btn').hide();
+            } else {
+                $('#logout-btn').hide();
+            }
+     </script>
 </body>
 
 </html>

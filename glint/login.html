@@ -42,13 +42,13 @@
 
                 <!-- <form class="login100-form validate-form" action="" method="POST"> -->
                 <div class="login100-form validate-form">
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                    <div id="username-div" class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Username</span>
                         <input class="input100" type="text" id="email" name="username" placeholder="Enter username">
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                    <div id="password-div" class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
                         <span class="label-input100">Password</span>
                         <input class="input100" type="password" id="password" name="pass" placeholder="Enter password">
                         <span class="focus-input100"></span>
@@ -74,6 +74,9 @@
                             Login
                         </button>
                     </div>
+                    <div id="auth-error" class="invisible animate flash mt-3 text-danger">
+                        Invalid Username / Password
+                    </div>
                 </div>
                 <!-- </form> -->
             </div>
@@ -98,7 +101,8 @@
     <script src="js/login.js"></script>
 
     <script>
-
+        delete localStorage.curr_user;
+        delete sessionStorage.curr_user;
         function login() {
             var email = $('#email').val();
             var password = $('#password').val();
@@ -112,10 +116,28 @@
                     id : encoded
                 }),
                 success: function (result) {
-                    console.log(result);
+                    console.log(result, $('#ckb1').is(":checked"));
+                    if($('#ckb1').is(":checked")){
+                        console.log('remember me');
+                        localStorage.setItem('curr_user', result.user.uid);
+                        localStorage.setItem('apiKey', result.user.stsTokenManager.apiKey);
+                        localStorage.setItem('accessToken', result.user.stsTokenManager.accessToken);
+                        localStorage.setItem('refreshToken', result.user.stsTokenManager.refreshToken);
+
+                    }
+                    sessionStorage.setItem('curr_user', result.user.uid);
+                    sessionStorage.setItem('apiKey', result.user.stsTokenManager.apiKey);
+                    sessionStorage.setItem('accessToken', result.user.stsTokenManager.accessToken);
+                    sessionStorage.setItem('refreshToken', result.user.stsTokenManager.refreshToken);
+                    location.href="index.html";
+
                 },
                 error: function (error){
                     console.log(error);
+                    $('#auth-error').removeClass('invisible');
+                    $('#auth-error').addClass('visible');
+                    $('#email').addClass('text-danger');
+                    $('#password').addClass('text-danger');
                 }
             });
         }
